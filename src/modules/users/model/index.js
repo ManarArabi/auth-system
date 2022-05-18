@@ -31,4 +31,4 @@ const userSchema = new mongoose.Schema({
   }
 })
 
-export const Users = mongoose.model('roles', roleSchema)
+export const Users = mongoose.model('roles', userSchema)
