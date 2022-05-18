@@ -33,14 +33,14 @@ just run `npm i` then `npm start` and here you go.
 
 
 ## Technical
-### Integrated packages
+### Integrated tools/packages
 - Eslint: for better coding style all over the project
 - Jest: for testing purposes
 - Swagger: for exposed APIs docs
 - Docker: to run regardless the environment 
 
 ### ER diagram
-
+![ER](er-diagram.png)
 
 ## Future work
 - Integrating jsDocs also will be better.
