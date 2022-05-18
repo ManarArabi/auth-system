@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    user: node:node
+    env_file: .env
+    container_name: auth-system
+    volumes:
+      - ./:/home/node/app
+    environment:
+      PORT: 8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongo
+    
+  mongo:
+    image: mongo:4.4
+    volumes:
+      - app-data:/data/db
+
+volumes:
+  app-data:

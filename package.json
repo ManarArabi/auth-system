@@ -8,6 +8,7 @@
     "dev": "nodemon src/index.js",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
+    "docker": "docker-compose up -d && docker exec -it auth-system bash",
     "test": "jest"
   },
   "author": "manar-arabi",
