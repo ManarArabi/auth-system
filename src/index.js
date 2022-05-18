@@ -1,8 +1,11 @@
 import app from './app.js'
 import mongoose from 'mongoose'
-import { seedSystemRoles } from './modules/roles/scripts/seed-roles.js'
+import { config } from 'dotenv'
+import { seedSystemSetup } from './seeding.js'
 
 const port = process.env.PORT || 3000
+
+config()
 
 app.listen(port, () => {
   console.log(`server listening on port ${port}`)
@@ -11,7 +14,7 @@ app.listen(port, () => {
 mongoose.connect(process.env.MONGO_URL).then(async () => {
   console.log('Mongoose is running')
 
-  await seedSystemRoles().catch((err) => console.log(`There is an error with seeding system roles, error: ${err}`))
+  await seedSystemSetup().catch((err) => console.log(err))
 }).catch(() => {
   console.log('Failed to start mongoose')
 })
