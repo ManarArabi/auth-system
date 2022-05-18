@@ -18,11 +18,17 @@ For me I decided to:
 - Using express-session and passport session along with each other ... firstly I thought that they are competitors but later I found out that they complete each other.
 
 ## How to run
-### Requirements
+
+### With docker
+1. Just install docker
+1. Run `npm run docker` in the root folder
+
+### Without docker
+#### Requirements
 - Mongo server installed
 - Node js installed
 
-### Setups
+#### Setups
 just run `npm i` then `npm start` and here you go.
 
 
@@ -31,12 +37,12 @@ just run `npm i` then `npm start` and here you go.
 - Eslint: for better coding style all over the project
 - Jest: for testing purposes
 - Swagger: for exposed APIs docs
+- Docker: to run regardless the environment 
 
 ### ER diagram
 
 
 ## Future work
-- Integrating docker will be better.
 - Integrating jsDocs also will be better.
 
 
