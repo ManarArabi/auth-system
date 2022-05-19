@@ -1,5 +1,5 @@
-import { ADMIN_ROLE } from '../constants/roles.js'
-import { systemInitialRoles } from '../constants/seed-roles.js'
+import { Permissions } from '../../permissions/model/index.js'
+import { ADMIN_ROLE, NORMAL_ROLE } from '../constants/index.js'
 import { Roles } from '../model/index.js'
 
 /**
@@ -12,5 +12,16 @@ export const seedSystemRoles = async () => {
 
   if (isAdminRoleExist) { return }
 
-  await Roles.insertMany(systemInitialRoles)
+  const systemPermissions = await Permissions.find().lean()
+
+  await Roles.insertMany([
+    {
+      name: ADMIN_ROLE,
+      permissions: systemPermissions
+    },
+    {
+      name: NORMAL_ROLE,
+      permissions: []
+    }
+  ])
 }

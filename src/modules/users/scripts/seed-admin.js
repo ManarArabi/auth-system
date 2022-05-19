@@ -1,5 +1,5 @@
 import { hashString } from '../../../common/helpers.js'
-import { ADMIN_ROLE } from '../../roles/constants/roles.js'
+import { ADMIN_ROLE } from '../../roles/constants/index.js'
 import { Roles } from '../../roles/model/index.js'
 import { Users } from '../model/index.js'
 
@@ -19,7 +19,11 @@ export const seedSystemAdmin = async () => {
 
   await Users.updateOne(
     { email: ADMIN_EMAIL, 'role._id': role._id },
-    { username: 'admin', role, password: hashedPassword },
+    {
+      username: 'admin',
+      role: { _id: role._id, permissions: role.permissions.map(permission => permission.name) },
+      password: hashedPassword
+    },
     { upsert: true }
   )
 }

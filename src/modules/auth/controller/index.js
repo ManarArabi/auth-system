@@ -1,5 +1,5 @@
 import httpStatus from 'http-status'
-import { authServices } from '../services'
+import { authServices } from '../services/index.js'
 
 export const { CREATED } = httpStatus
 

@@ -26,6 +26,11 @@ const userSchema = new mongoose.Schema({
     },
 
     permissions: [{
+      _id: {
+        type: mongoose.Types.ObjectId,
+        ref: 'permissions'
+      },
+
       type: String
     }]
   }
