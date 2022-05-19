@@ -11,4 +11,10 @@ router.post(
   authController.signup
 )
 
+router.post(
+  '/login',
+  validateSchema(authValidation.login),
+  authController.login
+)
+
 export default router

@@ -18,3 +18,19 @@ export const createUserResponseBodySchema = {
     role: { type: 'string' }
   }
 }
+
+export const loginRequestBodySchema = {
+  type: 'object',
+  properties: {
+    password: { type: 'string' },
+    email: { type: 'string' }
+  },
+  required: ['password', 'email']
+}
+
+export const loginUserResponseBodySchema = {
+  type: 'object',
+  properties: {
+    jwt: { type: 'string' }
+  }
+}

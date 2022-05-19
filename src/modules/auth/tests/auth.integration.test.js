@@ -3,8 +3,11 @@ import mongoose from 'mongoose'
 import request from 'supertest'
 import jwt from 'jsonwebtoken'
 import app from '../../../app.js'
+import { Users } from '../../users/model/index.js'
+import { hashString } from '../../../common/helpers.js'
+import { NORMAL_ROLE } from '../../roles/constants/index.js'
 
-const { BAD_REQUEST, CREATED } = httpStatus
+const { BAD_REQUEST, CREATED, OK, NOT_FOUND, UNAUTHORIZED } = httpStatus
 
 describe('Auth endpoints integration tests', () => {
   beforeAll(async () => {
@@ -32,7 +35,7 @@ describe('Auth endpoints integration tests', () => {
       expect(status).toBe(CREATED)
 
       const { _id, __v, jwt: token, ...user } = body
-      expect(user).toEqual({ username: payload.username, email: payload.email })
+      expect(user).toEqual({ username: payload.username, email: payload.email, role: NORMAL_ROLE })
 
       const { exp, iat, ...tokenPayload } = jwt.decode(token)
       expect(tokenPayload).toEqual({ username: payload.username, email: payload.email })
@@ -46,6 +49,46 @@ describe('Auth endpoints integration tests', () => {
         })
 
       expect(status).toBe(BAD_REQUEST)
+    })
+  })
+
+  describe('POST /login', () => {
+    const userPassword = '1234'
+    let user
+
+    beforeAll(async () => {
+      const hashedPassword = await hashString({ str: userPassword })
+
+      user = await Users.create({
+        email: 'test123@test.com',
+        username: 'testing',
+        password: hashedPassword
+      })
+    })
+
+    test('A user can login successfully', async () => {
+      const { status, body } = await request(app)
+        .post('/login')
+        .send({ email: user.email, password: userPassword })
+
+      expect(status).toBe(OK)
+      expect(body).not.toBeFalsy()
+    })
+
+    test('It returns not found if there is not user', async () => {
+      const { status } = await request(app)
+        .post('/login')
+        .send({ email: 'here@123.com', password: userPassword })
+
+      expect(status).toBe(NOT_FOUND)
+    })
+
+    test('It returns unauthorized if the password is wring', async () => {
+      const { status } = await request(app)
+        .post('/login')
+        .send({ email: user.email, password: 'wrong-password' })
+
+      expect(status).toBe(UNAUTHORIZED)
     })
   })
 })
