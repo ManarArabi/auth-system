@@ -11,6 +11,6 @@ export const authServices = {
 
     const jwt = generateJwt({ data: { username, email } })
 
-    return { jwt, username, email }
+    return { jwt, username, email, role: NORMAL_ROLE }
   }
 }
