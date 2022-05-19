@@ -8,7 +8,10 @@ const roleSchema = new mongoose.Schema({
 
   permissions: {
     type: [{
-      _id: String,
+      _id: {
+        type: mongoose.Types.ObjectId,
+        ref: 'permissions'
+      },
       name: String
     }],
     required: true
