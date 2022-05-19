@@ -38,5 +38,9 @@ export const authServices = {
     await Users.updateOne({ email }, { jwt })
 
     return jwt
+  },
+
+  logout: async ({ userId }) => {
+    await Users.updateOne({ _id: userId }, { $unset: { jwt: -1 } })
   }
 }

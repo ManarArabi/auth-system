@@ -50,7 +50,7 @@ export const authEndpointsDocs = {
       },
 
       responses: {
-        201: {
+        200: {
           description: 'Logged in successfully',
           content: {
             'application/json': {
@@ -61,6 +61,30 @@ export const authEndpointsDocs = {
 
         400: {
           description: 'Bad Request'
+        },
+
+        500: {
+          description: 'Internal server error'
+        }
+      }
+    }
+  },
+
+  '/logout': {
+    post: {
+      tags: [authTag.name],
+      description: 'Logout user',
+      responses: {
+        200: {
+          description: 'Logged out successfully'
+        },
+
+        400: {
+          description: 'Bad Request'
+        },
+
+        401: {
+          description: 'There is no user related to the provided jwt'
         },
 
         500: {

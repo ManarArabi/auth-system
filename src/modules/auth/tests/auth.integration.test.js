@@ -4,7 +4,7 @@ import request from 'supertest'
 import jwt from 'jsonwebtoken'
 import app from '../../../app.js'
 import { Users } from '../../users/model/index.js'
-import { hashString } from '../../../common/helpers.js'
+import { generateJwt, hashString } from '../../../common/helpers.js'
 import { NORMAL_ROLE } from '../../roles/constants/index.js'
 
 const { BAD_REQUEST, CREATED, OK, NOT_FOUND, UNAUTHORIZED } = httpStatus
@@ -89,6 +89,37 @@ describe('Auth endpoints integration tests', () => {
         .send({ email: user.email, password: 'wrong-password' })
 
       expect(status).toBe(UNAUTHORIZED)
+    })
+  })
+
+  describe('POST /logout', () => {
+    let userJwt
+    const userPayload = {
+      email: 'test12@test.com',
+      username: 'testing'
+    }
+
+    beforeAll(async () => {
+      const hashedPassword = await hashString({ str: '1234' })
+
+      userJwt = generateJwt({ data: userPayload })
+
+      await Users.create({
+        ...userPayload,
+        password: hashedPassword,
+        jwt: userJwt
+      })
+    })
+
+    test('It logs user out successfully', async () => {
+      const { status } = await request(app)
+        .post('/logout')
+        .set('Authorization', `JWT ${userJwt}`)
+
+      expect(status).toBe(OK)
+
+      const user = await Users.findOne({ email: userPayload.email }, { jwt: 1 }).lean()
+      expect(user.jwt).toBeFalsy()
     })
   })
 })

@@ -30,5 +30,19 @@ export const authController = {
     } catch (err) {
       return next(err)
     }
+  },
+
+  logout: async (req, res, next) => {
+    const {
+      user: { _id: userId }
+    } = req
+
+    try {
+      await authServices.logout({ userId })
+
+      return res.status(OK).send()
+    } catch (err) {
+      return next(err)
+    }
   }
 }
