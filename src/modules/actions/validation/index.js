@@ -15,5 +15,13 @@ export const actionValidation = {
       id: Joi.string().trim().required(),
       userId: Joi.string().trim().required()
     }
+  },
+
+  updateActionPermissionIds: {
+    body: {
+      permissionIds: Joi.array().items(
+        Joi.string().trim()
+      ).min(1).single().required()
+    }
   }
 }

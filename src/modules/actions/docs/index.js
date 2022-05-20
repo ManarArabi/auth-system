@@ -1,6 +1,6 @@
 import { actionTag } from '../../../../docs/tags.js'
 import { actionIdParameter, userIdParameter } from './parameters.js'
-import { addActionRequestBodySchema, addActionResponseBodySchema, checkUserAuthorizationResponseBodySchema } from './schema.js'
+import { addActionRequestBodySchema, addActionResponseBodySchema, checkUserAuthorizationResponseBodySchema, updateActionPermissionsRequestBodySchema } from './schema.js'
 
 export const actionEndpointsDocs = {
   '/actions/': {
@@ -84,6 +84,50 @@ export const actionEndpointsDocs = {
           description: `
 - User not found
 - Action not found
+`
+        },
+
+        500: {
+          description: 'Internal server error'
+        }
+      }
+    }
+  },
+
+  '/actions/:id/permissions': {
+    put: {
+      tags: [actionTag.name],
+      description: 'Updates action permissions - it will overwrites the action permissions with the provided permissions',
+      requestBody: {
+        required: true,
+        content: {
+          'application/json': {
+            schema: updateActionPermissionsRequestBodySchema
+          }
+        }
+      },
+
+      responses: {
+        204: {
+          description: 'Action Updated successfully'
+        },
+
+        400: {
+          description: 'Bad Request'
+        },
+
+        401: {
+          description: 'Invalid jwt'
+        },
+
+        403: {
+          description: 'User not authorized to update action permissions'
+        },
+
+        404: {
+          description: `
+- Action is not found
+- There is one permission or more are not exist
 `
         },
 

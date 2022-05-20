@@ -24,3 +24,11 @@ export const checkUserAuthorizationResponseBodySchema = {
     isAuthorized: { type: 'string' }
   }
 }
+
+export const updateActionPermissionsRequestBodySchema = {
+  type: 'object',
+  properties: {
+    permissionIds: { type: 'array', items: { type: 'string' } }
+  },
+  required: ['permissionIds']
+}

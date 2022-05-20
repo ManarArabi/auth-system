@@ -2,7 +2,7 @@ import httpStatus from 'http-status'
 import _ from 'lodash'
 import HttpError from '../../../common/httpError.js'
 import { authServices } from '../../auth/services/index.js'
-import { CAN_ADD_ACTION, CAN_CHECK_USER_AUTHORIZATION } from '../../permissions/constants/index.js'
+import { CAN_ADD_ACTION, CAN_ASSIGN_ACTION_PERMISSION, CAN_CHECK_USER_AUTHORIZATION } from '../../permissions/constants/index.js'
 import { Permissions } from '../../permissions/model/index.js'
 import { Users } from '../../users/model/index.js'
 import { getAdminUser } from '../../users/services/index.js'
@@ -90,5 +90,40 @@ export const actionServices = {
     const isAuthorized = await authServices.authorizeAction({ actionId, userRoleId: user.role._id })
 
     return { isAuthorized }
+  },
+
+  /**
+   * It updates action with the provided permissions
+   *
+   * @param {Object} args
+   * @param {String} args.actionId
+   * @param {[String]} args.permissionIds
+   *
+   * @param {Object} callerData
+   * @param {String} callerData.callerId
+   * @param {Object} callerData.callerRole
+   *
+   * @returns {Promise}
+   */
+  updateActionPermissionIds: async (
+    { actionId, permissionIds },
+    { callerId, callerRole: { permissions: callerPermissions } }
+  ) => {
+    const { _id: adminUserId } = await getAdminUser()
+
+    if (String(adminUserId) !== String(callerId) && !callerPermissions.includes(CAN_ASSIGN_ACTION_PERMISSION)) {
+      throw new HttpError({ message: 'User not authorized to add new action', status: UNAUTHORIZED })
+    }
+
+    if (!await Actions.exists({ _id: actionId })) {
+      throw new HttpError({ message: 'action not found', status: NOT_FOUND })
+    }
+
+    const permissions = await Permissions.find({ _id: { $in: permissionIds } }, { _id: 1 }).lean()
+    if (permissions.length < permissionIds.length) {
+      throw new HttpError({ message: 'There is one or more permission is not exist', status: NOT_FOUND })
+    }
+
+    await Actions.updateOne({ _id: actionId }, { requiredPermissionIds: permissionIds })
   }
 }

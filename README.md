@@ -7,6 +7,7 @@
 - Adding roles with certain permissions
 - Updating roles permissions
 - Adding actions with certain permissions
+- Updating actions permissions
 - Assigning role to certain user 
 - Validating whether logged user is permitted to do specific action or not
 
@@ -66,8 +67,6 @@ Permissions are denormalized in users schema here as the authorize will be used 
 - Integrating jsDocs also will be better.
 - Seeding basic actions to the system on project startup.
 - Adding endpoints to facilitate the work flow:
-  - delete role
-  - update action permissions
   - listing roles with their permissions
   - listing actions with their permissions
   - listing user with his permissions

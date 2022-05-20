@@ -19,4 +19,12 @@ router.get(
   validateSchema(actionValidation.checkUserAuthorization),
   actionsController.checkUserAuthorization
 )
+
+router.put(
+  '/:id/permissions',
+  authenticate,
+  validateSchema(actionValidation.updateActionPermissionIds),
+  actionsController.updateActionPermissionIds
+)
+
 export default router
