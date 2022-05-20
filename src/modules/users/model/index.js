@@ -31,8 +31,12 @@ const userSchema = new mongoose.Schema({
         ref: 'permissions'
       },
 
-      type: String
+      name: String
     }]
+  },
+
+  jwt: {
+    type: String
   }
 })
 

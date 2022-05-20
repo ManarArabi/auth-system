@@ -3,7 +3,8 @@ import mongoose from 'mongoose'
 const actionSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    uniq: true
   },
 
   requiredPermissionIds: {
