@@ -1,7 +1,7 @@
 export const addActionRequestBodySchema = {
   type: 'object',
   properties: {
-    name: { type: 'string' },
+    ActionName: { type: 'string' },
     requiredPermissionIds: { type: 'array', items: { type: 'string' } }
   },
   required: ['name', 'requiredPermissionIds']

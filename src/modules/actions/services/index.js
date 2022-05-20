@@ -2,7 +2,7 @@ import httpStatus from 'http-status'
 import HttpError from '../../../common/httpError.js'
 import { CAN_ADD_ACTION } from '../../permissions/constants/index.js'
 import { Permissions } from '../../permissions/model/index.js'
-import { getAdminUser } from '../../roles/services/index.js'
+import { getAdminUser } from '../../users/services/index.js'
 import { Actions } from '../models/index.js'
 
 const { CONFLICT, UNAUTHORIZED, NOT_FOUND } = httpStatus

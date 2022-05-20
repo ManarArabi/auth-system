@@ -8,7 +8,13 @@ export const actionTag = {
   description: 'API for action endpoints in the system'
 }
 
+export const rolesTag = {
+  name: 'Roles',
+  description: 'API for role endpoints in the system'
+}
+
 export const tags = [
   actionTag,
-  authTag
+  authTag,
+  rolesTag
 ]

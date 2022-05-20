@@ -1,9 +1,11 @@
 import { Roles } from '../../roles/model/index.js'
 import _ from 'lodash'
+import promiseMemoize from 'promise-memoize'
 import HttpError from '../../../common/httpError.js'
 import httpStatus from 'http-status'
 import { Users } from '../model/index.js'
 import { hashString } from '../../../common/helpers.js'
+import { getAdminRoleId } from '../../roles/services/index.js'
 
 const { NOT_FOUND, CONFLICT } = httpStatus
 
@@ -42,3 +44,10 @@ export const createUser = async ({ username, password, email, roleId }) => {
 
   return user
 }
+
+export const getAdminUser = promiseMemoize(async () => {
+  const adminRoleId = await getAdminRoleId()
+  const user = await Users.findOne({ 'role._id': adminRoleId }).lean()
+
+  return user
+})
