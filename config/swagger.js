@@ -5,7 +5,7 @@ export const swaggerDocument = {
   openapi: '3.0.0',
   info: {
     version: '1.0.0',
-    title: 'User Authentication System Endpoints Documentation'
+    title: 'User Auth System Endpoints Documentation'
   },
   host: 'localhost:3000',
   basePath: '/',
