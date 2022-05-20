@@ -38,7 +38,7 @@ For me I decided to:
 - I tried as much as I could to test everything but it seems somehow that every file passes when I run it separated from the others ... making email, actions, permissions, and roles uniq messes them when I run them all together.
 
 #### Authentication
-- Firstly, I was thinking to implement the authentication with sessions as it is more secure and ... but decided to use jwt as it is more simple and will do the job well.
+- Firstly, I was thinking to implement the authentication with sessions as it is more secure ... but decided to use jwt as it is more simple and will do the job well.
 
 ## How to run
 
