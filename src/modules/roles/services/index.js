@@ -15,6 +15,19 @@ export const getAdminRole = promiseMemoize(async () => Roles.findOne({ name: ADM
 const { UNAUTHORIZED, CONFLICT } = httpStatus
 
 export const roleServices = {
+  /**
+   * It creates role with the provided permissions
+   *
+   * @param {Object} args
+   * @param {String} args.roleName
+   * @param {[String]} args.permissions
+   *
+   * @param {Object} callerData
+   * @param {String} callerData.callerId
+   * @param {Object} callerData.callerRole
+   *
+   * @returns {Promise<Object>}
+   */
   addRole: async ({ roleName, permissions }, { callerId, callerRole: { permissions: callerPermissions } }) => {
     const { _id: adminUserId } = await getAdminUser()
 
