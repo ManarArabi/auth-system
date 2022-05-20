@@ -32,7 +32,7 @@ For me I decided to:
 
 - Although this idea means more work and much more endpoints :joy: but it was the best and optimum I have in my mind
 
-- The system now has the basic endpoints to start with but working with it in this case will require listing the actions, role, permissions, and users listing from data base for now until their endpoints is implemented.
+- The system now has the basic target endpoints to start with but working with it in this case will require listing the actions, role, permissions, and users listing from data base for now until their endpoints is implemented.
 
 #### Testing
 - I tried as much as I could to test everything but it seems somehow that every file passes when I run it separated from the others ... making email, actions, permissions, and roles uniq messes them when I run them all together.
