@@ -92,5 +92,9 @@ Permissions are denormalized in users schema here as the authorize will be used 
 
 ## Useful
 [Exploring difference between sessions, cookie, and jwt is really insightful](https://developer.okta.com/blog/2021/06/07/session-mgmt-node)
+
+
 [Secure session management](https://blog.jscrambler.com/best-practices-for-secure-session-management-in-node)
+
+
 [Using passport with sessions](https://www.airpair.com/express/posts/expressjs-and-passportjs-sessions-deep-dive)
