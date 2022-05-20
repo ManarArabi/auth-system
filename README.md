@@ -26,6 +26,7 @@ For me I decided to:
 ### With docker
 1. Just install docker
 1. Run `npm run docker` in the root folder
+1. init `.env` file and please note that if you will use a local db, it should be something like this `mongodb://mongo:27017/user-auth-system`
 
 ### Without docker
 #### Requirements
@@ -33,7 +34,7 @@ For me I decided to:
 - Node js installed
 
 #### Setups
-just run `npm i` then `npm start` and here you go.
+just run `npm i`, add `.env` file ... then `npm start` and here you go.
 
 ## Technical
 ### Integrated tools/packages
