@@ -21,7 +21,7 @@ export const seedSystemAdmin = async () => {
     { email: ADMIN_EMAIL, 'role._id': role._id },
     {
       username: 'admin',
-      role: { _id: role._id, permissions: role.permissions.map(permission => permission.name) },
+      role: { _id: role._id, permissions: role.permissions },
       password: hashedPassword
     },
     { upsert: true }
