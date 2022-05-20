@@ -82,7 +82,7 @@ describe('Actions endpoints integration tests', () => {
       const role = await Roles.create({ name: 'test user authorization', permissions: [permission] });
       ({ _id: actionId } = await Actions.create({ name: 'test user authorization', requiredPermissionIds: [permission._id] }));
 
-      ({ _id: userId } = await Users.create({ email: 'testActions@test.com', username: 'test', password: '123', role }))
+      ({ _id: userId } = await Users.create({ email: 'testActions2@test.com', username: 'test', password: '123', role }))
     })
 
     test('It returns true if the user permissions contains all action permissions', async () => {

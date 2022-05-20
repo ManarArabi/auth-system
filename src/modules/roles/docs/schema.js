@@ -26,3 +26,10 @@ export const addRoleResponseBodySchema = {
 
   required: ['name', 'requiredPermissionIds']
 }
+
+export const updateRolePermissionsBodySchema = {
+  type: 'object',
+  properties: {
+    permissions: { type: 'array', items: { type: 'string' } }
+  }
+}

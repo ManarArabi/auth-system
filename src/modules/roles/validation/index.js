@@ -6,5 +6,11 @@ export const rolesValidation = {
       roleName: Joi.string().trim().required(),
       permissions: Joi.array().items(Joi.string().trim()).min(1).required()
     }
+  },
+
+  updateRolePermissions: {
+    body: {
+      permissions: Joi.array().items(Joi.string().trim()).min(1).required()
+    }
   }
 }

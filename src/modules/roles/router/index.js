@@ -13,4 +13,11 @@ router.post(
   rolesController.addRole
 )
 
+router.put(
+  '/:id/permissions',
+  authenticate,
+  validateSchema(rolesValidation.updateRolePermissions),
+  rolesController.updateRolePermissions
+)
+
 export default router

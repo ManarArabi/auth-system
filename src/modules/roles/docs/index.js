@@ -46,5 +46,46 @@ export const rolesEndpointsDocs = {
         }
       }
     }
+  },
+
+  '/roles/:id/permissions': {
+    put: {
+      tags: [rolesTag.name],
+      description: 'Updates a role permissions - it will overwrite role permissions with the provided array',
+      requestBody: {
+        required: true,
+        content: {
+          'application/json': {
+            schema: addRoleRequestBodySchema
+          }
+        }
+      },
+
+      responses: {
+        204: {
+          description: 'Role updated successfully'
+        },
+
+        400: {
+          description: 'Bad Request'
+        },
+
+        401: {
+          description: 'Invalid jwt'
+        },
+
+        404: {
+          description: 'Role not exist'
+        },
+
+        403: {
+          description: 'User not authorized to update role permissions'
+        },
+
+        500: {
+          description: 'Internal server error'
+        }
+      }
+    }
   }
 }

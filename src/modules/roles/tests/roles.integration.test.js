@@ -4,14 +4,20 @@ import request from 'supertest'
 import app from '../../../app.js'
 import { Permissions } from '../../permissions/model/index.js'
 import { getTestAdminUser } from '../../../../tests/helpers.js'
+import { Roles } from '../model/index.js'
+import { eventEmitter } from '../../../event-emitter.js'
 
-const { CONFLICT, CREATED } = httpStatus
+const { CONFLICT, CREATED, NO_CONTENT, NOT_FOUND } = httpStatus
 
 describe('Roles endpoints integration tests', () => {
+  let userJwt
+
   beforeAll(async () => {
     const { MONGO_TEST_URL } = process.env
 
-    await mongoose.connect(MONGO_TEST_URL)
+    await mongoose.connect(MONGO_TEST_URL);
+
+    ({ jwt: userJwt } = await getTestAdminUser({ email: 'testRole2@test.com' }))
   })
 
   afterAll(async () => {
@@ -19,13 +25,10 @@ describe('Roles endpoints integration tests', () => {
   })
 
   describe('POST /roles/', () => {
-    let userJwt
     let permissionName
 
     beforeAll(async () => {
-      ({ jwt: userJwt } = await getTestAdminUser({ email: 'testRole@test.com' }));
-
-      ({ name: permissionName } = await Permissions.create({ name: 'permission 1' }))
+      ({ name: permissionName } = await Permissions.create({ name: 'test create permission 1' }))
     })
 
     test('It create a role successfully', async () => {
@@ -34,13 +37,13 @@ describe('Roles endpoints integration tests', () => {
         .set('Authorization', `JWT ${userJwt}`)
         .send({
           roleName: 'new role',
-          permissions: [permissionName, 'permission 2']
+          permissions: [permissionName, 'test create permission 2']
         })
 
       expect(status).toBe(CREATED)
 
       expect(body.name).toEqual('new role')
-      expect(body.permissions.map(p => p.name)).toEqual([permissionName, 'permission 2'])
+      expect(body.permissions.map(p => p.name)).toEqual([permissionName, 'test create permission 2'])
     })
 
     test('It fails if the role is created before', async () => {
@@ -53,6 +56,43 @@ describe('Roles endpoints integration tests', () => {
         })
 
       expect(status).toBe(CONFLICT)
+    })
+  })
+
+  describe('PUT /roles/:id/permissions', () => {
+    let roleId
+
+    beforeAll(async () => {
+      ({ _id: roleId } = await Roles.create({ name: 'update role permissions' }))
+
+      eventEmitter.emit = jest.fn(() => true)
+    })
+
+    test('It updates role permissions successfully', async () => {
+      const { status } = await request(app)
+        .put(`/roles/${roleId}/permissions`)
+        .set('Authorization', `JWT ${userJwt}`)
+        .send({
+          permissions: ['update role permission']
+        })
+
+      expect(status).toBe(NO_CONTENT)
+
+      expect(await Roles.countDocuments({ _id: roleId, 'permissions.name': 'update role permission' })).toEqual(1)
+      expect(await Permissions.countDocuments({ name: 'update role permission' })).toEqual(1)
+
+      expect(eventEmitter.emit).toBeCalled()
+    })
+
+    test('It fails if the role is not exist', async () => {
+      const { status } = await request(app)
+        .put(`/roles/${String(mongoose.Types.ObjectId())}/permissions`)
+        .set('Authorization', `JWT ${userJwt}`)
+        .send({
+          permissions: ['update role permission2']
+        })
+
+      expect(status).toBe(NOT_FOUND)
     })
   })
 })

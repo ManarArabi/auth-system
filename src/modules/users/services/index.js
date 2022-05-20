@@ -82,3 +82,16 @@ export const assignRoleToUser = async ({ userId, roleId }, { callerId, callerRol
 
   await Users.updateOne({ _id: userId }, { role })
 }
+
+/**
+ * It syncs user permissions with role permissions
+ *
+ * @param {Object} args
+ * @param {String} args.roleId
+ * @param {[Object]} args.permissions
+ *
+ * @returns {Promise}
+ */
+export const updateUsersPermissions = async ({ roleId, permissions }) => {
+  await Users.updateMany({ 'role._id': roleId }, { 'role.permissions': permissions })
+}

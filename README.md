@@ -1,9 +1,14 @@
 # Authentication and Authorization system
 ## Description
-### Features
-- service is responsible for authenticate and login users
-- service is responsible for validating whether logged user is permitted to do specific action or not
-- service is responsible for logging users out from the system
+### Use cases
+- Sign up and authenticating users
+- Log users out from the system
+- Adding permissions
+- Adding roles with certain permissions
+- Updating roles permissions
+- Adding actions with certain permissions
+- Assigning role to certain user 
+- Validating whether logged user is permitted to do specific action or not
 
 ### Considerations
 Here is the points that first come to my mind after some thinking and searching and you will find some resources that will help you to take a decision.
@@ -53,19 +58,18 @@ Permissions are denormalized in users schema here as the authorize will be used 
 
 - Setting admin mail and password in the `.env` file, will create an admin with these data on the startup and if there is already admin with the provided mail, it will reset his password with the provided password.
 
+### APIs
+- After running the project you can find the endpoint docs at `localhost:<port-number>/docs`
 
 ## Future work
 - Integrating jsDocs also will be better.
 - Seeding basic actions to the system on project startup.
-- Making the exposed endpoint easier by accepting role/action/permission direct string .. not the id.
 - Adding endpoints to facilitate the work flow:
-  - update role permissions
   - delete role
   - update action permissions
   - listing roles with their permissions
   - listing actions with their permissions
   - listing user with his permissions
-- Maintaining denormalized permissions consistency after updates by events
 - Implement the same logic with sessions
 
 ## Useful links
