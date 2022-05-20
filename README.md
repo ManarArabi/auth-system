@@ -64,7 +64,7 @@ Permissions are denormalized in users schema here as the authorize will be used 
 - After running the project you can find the endpoint docs at `localhost:<port-number>/docs`
 
 ## Future work
-- Integrating jsDocs also will be better.
+- Using passport.
 - Seeding basic actions to the system on project startup.
 - Adding endpoints to facilitate the work flow:
   - listing roles with their permissions
