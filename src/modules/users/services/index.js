@@ -6,8 +6,9 @@ import httpStatus from 'http-status'
 import { Users } from '../model/index.js'
 import { hashString } from '../../../common/helpers.js'
 import { getAdminRoleId } from '../../roles/services/index.js'
+import { CAN_ASSIGN_USER_ROLE } from '../../permissions/constants/index.js'
 
-const { NOT_FOUND, CONFLICT } = httpStatus
+const { NOT_FOUND, CONFLICT, UNAUTHORIZED } = httpStatus
 
 /**
  * It creates new user with the provided data
@@ -52,3 +53,32 @@ export const getAdminUser = promiseMemoize(async () => {
 
   return user
 })
+
+/**
+ * It assigns a role to the provided user
+ *
+ * @param {Object} args
+ * @param {String} args.userId
+ * @param {String} args.roleId
+ *
+ * @param {Object} callerData
+ * @param {String} callerData.callerId
+ * @param {Object} callerData.callerRole
+ *
+ * @returns {Promise}
+ */
+export const assignRoleToUser = async ({ userId, roleId }, { callerId, callerRole: { permissions: callerPermissions } }) => {
+  const { _id: adminUserId } = await getAdminUser()
+
+  if (String(adminUserId) !== String(callerId) && !callerPermissions.includes(CAN_ASSIGN_USER_ROLE)) {
+    throw new HttpError({ message: 'User not authorized to add new action', status: UNAUTHORIZED })
+  }
+
+  const role = await Roles.findOne({ _id: roleId }, { name: -1 }).lean()
+
+  if (_.isNil(role)) {
+    throw new HttpError({ message: 'Role not found', status: NOT_FOUND })
+  }
+
+  await Users.updateOne({ _id: userId }, { role })
+}
