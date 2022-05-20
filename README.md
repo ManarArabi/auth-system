@@ -22,6 +22,24 @@ For me I decided to:
 - Use jwt for user authentication as It is simple and easier to implement.
 - To save jwt in the users collection to log the user out by deleting it.
 
+### Thinking process
+
+#### System design
+
+- Firstly, I was thinking of something more simple consist of only users and roles but after 2 days of thinking and initial planning/implementation I found that, we can't check user action authorization unless this action is implemented in the code and this is not extendable.
+
+- So, The idea of saving actions as constant strings in data base came from here ... the system will have as many actions as the consumer need and could be integrated as auth system with any other working system.
+
+- Although this idea means more work and much more endpoints :joy: but it was the best and optimum I have in my mind
+
+- The system now has the basic endpoints to start with but working with it in this case will require listing the actions, role, permissions, and users listing from data base for now until their endpoints is implemented.
+
+#### Testing
+- I tried as much as I could to test everything but it seems somehow that every file passes when I run it separated from the others ... making email, actions, permissions, and roles uniq messes them when I run them all together.
+
+#### Authentication
+- Firstly, I was thinking to implement the authentication with sessions as it is more secure and ... but decided to use jwt as it is more simple and will do the job well.
+
 ## How to run
 
 ### With docker
@@ -64,16 +82,15 @@ Permissions are denormalized in users schema here as the authorize will be used 
 - After running the project you can find the endpoint docs at `localhost:<port-number>/docs`
 
 ## Future work
-- Using passport.
-- Seeding basic actions to the system on project startup.
 - Adding endpoints to facilitate the work flow:
   - listing roles with their permissions
   - listing actions with their permissions
   - listing user with his permissions
+- Revisiting authentication layer to make it more robust and using passport
+- Seeding basic actions to the system on project startup.
 - Implement the same logic with sessions
 
-## Useful links
-- https://developer.okta.com/blog/2021/06/07/session-mgmt-node
-- https://blog.jscrambler.com/best-practices-for-secure-session-management-in-node
-- https://stackoverflow.com/questions/27010013/express-session-vs-passportjs-session
-- https://www.airpair.com/express/posts/expressjs-and-passportjs-sessions-deep-dive
+## Useful
+[Exploring difference between sessions, cookie, and jwt is really insightful](https://developer.okta.com/blog/2021/06/07/session-mgmt-node)
+[Secure session management](https://blog.jscrambler.com/best-practices-for-secure-session-management-in-node)
+[Using passport with sessions](https://www.airpair.com/express/posts/expressjs-and-passportjs-sessions-deep-dive)
