@@ -39,7 +39,7 @@ just run `npm i` then `npm start` and here you go.
 
 ## Project details
 ### ER diagram
-I wanted the authorization to be extendible ... not dependant on actions which is implemented in the code.
+I wanted the authorization to be extendible ... not dependant on actions implemented in the code.
 This design will allow the user to add as many actions as he like and assign their permissions to roles and users also easily.
 
 Permissions are denormalized in users schema here as the authorize will be used in real systems more than updating a role/action permissions
