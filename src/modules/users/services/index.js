@@ -46,7 +46,8 @@ export const createUser = async ({ username, password, email, roleId }) => {
 }
 
 export const getAdminUser = promiseMemoize(async () => {
-  const adminRoleId = await getAdminRoleId()
+  const [adminRoleId] = await getAdminRoleId()
+
   const user = await Users.findOne({ 'role._id': adminRoleId }).lean()
 
   return user

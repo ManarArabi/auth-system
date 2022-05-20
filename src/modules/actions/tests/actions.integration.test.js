@@ -2,10 +2,8 @@ import httpStatus from 'http-status'
 import mongoose from 'mongoose'
 import request from 'supertest'
 import app from '../../../app.js'
-import { Users } from '../../users/model/index.js'
-import { generateJwt, hashString } from '../../../common/helpers.js'
-import { getAdminRole } from '../../roles/services/index.js'
 import { Permissions } from '../../permissions/model/index.js'
+import { getTestAdminUser } from '../../../../tests/helpers.js'
 
 const { CONFLICT, CREATED, NOT_FOUND } = httpStatus
 
@@ -25,23 +23,7 @@ describe('Actions endpoints integration tests', () => {
     let permissionId
 
     beforeAll(async () => {
-      const adminRole = await getAdminRole()
-
-      const userPayload = {
-        email: 'testActions@test.com',
-        username: 'testing',
-        role: adminRole
-      }
-
-      const hashedPassword = await hashString({ str: '1234' })
-
-      userJwt = generateJwt({ data: userPayload })
-
-      await Users.create({
-        ...userPayload,
-        password: hashedPassword,
-        jwt: userJwt
-      });
+      ({ jwt: userJwt } = await getTestAdminUser({ email: 'testActions@test.com' }));
 
       ({ _id: permissionId } = await Permissions.create({ name: 'a permission' }))
     })

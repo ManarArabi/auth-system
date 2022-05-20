@@ -39,7 +39,7 @@ export const roleServices = {
 
     const role = await Roles.create({
       name: roleName,
-      permissions: _.uniqBy([...existPermissions, ...newPermissions], p => String(p._id))
+      permissions: _.uniqBy([...existPermissions, ...newPermissions], p => String(p.name))
     })
     return role
   }
