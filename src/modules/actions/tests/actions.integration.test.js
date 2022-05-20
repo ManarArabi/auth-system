@@ -9,7 +9,7 @@ import { Permissions } from '../../permissions/model/index.js'
 
 const { CONFLICT, CREATED, NOT_FOUND } = httpStatus
 
-describe('Auth endpoints integration tests', () => {
+describe('Actions endpoints integration tests', () => {
   beforeAll(async () => {
     const { MONGO_TEST_URL } = process.env
 
@@ -28,7 +28,7 @@ describe('Auth endpoints integration tests', () => {
       const adminRole = await getAdminRole()
 
       const userPayload = {
-        email: 'test12@test.com',
+        email: 'testActions@test.com',
         username: 'testing',
         role: adminRole
       }

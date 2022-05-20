@@ -95,7 +95,7 @@ describe('Auth endpoints integration tests', () => {
   describe('POST /logout', () => {
     let userJwt
     const userPayload = {
-      email: 'test12@test.com',
+      email: 'testAuth@test.com',
       username: 'testing'
     }
 
