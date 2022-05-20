@@ -17,3 +17,10 @@ export const addActionResponseBodySchema = {
 
   required: ['name', 'requiredPermissionIds']
 }
+
+export const checkUserAuthorizationResponseBodySchema = {
+  type: 'object',
+  properties: {
+    isAuthorized: { type: 'string' }
+  }
+}

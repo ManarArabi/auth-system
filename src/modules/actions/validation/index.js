@@ -8,5 +8,12 @@ export const actionValidation = {
         Joi.string().trim()
       ).min(1).single().required()
     }
+  },
+
+  checkUserAuthorization: {
+    params: {
+      id: Joi.string().trim().required(),
+      userId: Joi.string().trim().required()
+    }
   }
 }

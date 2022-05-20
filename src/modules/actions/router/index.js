@@ -13,4 +13,10 @@ router.post(
   actionsController.addAction
 )
 
+router.get(
+  '/:id/users/:userId/authorization',
+  authenticate,
+  validateSchema(actionValidation.checkUserAuthorization),
+  actionsController.checkUserAuthorization
+)
 export default router
